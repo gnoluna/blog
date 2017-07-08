@@ -15,7 +15,7 @@
 
 {% block content %}
 
-  <div id="posts" class="posts-expand">
+  <div id="posts" class="posts-expand text-center">
   {% include '_partials/page-header.swig' %}
     {# tagcloud page support #}
     {% if page.type === "tags" %}

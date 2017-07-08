@@ -70,3 +70,14 @@ deploy:
   type: git
   repo: https://github.com/Gnostikoi/gnostikoi.github.io.git
   branch: master
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+# add caption for iamges
+image_caption:
+  enable: true #false to disable
+  class_name: my-image-caption #if you wanna customize the style for the caption,you can assign a class name, default is 'image-caption'
