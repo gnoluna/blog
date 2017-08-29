@@ -1,5 +1,5 @@
 ---
-title: 论文阅读: Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition 
+title: "论文阅读: Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition" 
 date: 2016-07-03 15:15:53
 tags: [lstm, Deep Learning]
 categories: Deep Learning
