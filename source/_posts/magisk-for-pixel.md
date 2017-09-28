@@ -36,7 +36,7 @@ catagories: tweeks
 7. 重启后安装 **MagiskManager-v5.3.5.apk**
 8. 看到此界面说明您已经安装成功
 
-![](/uploads/magisk_screenshot.png)
+<img src="/uploads/magisk_screenshot.png" width=50% height=50%/>
 
 
 ### 新特性
