@@ -6,12 +6,14 @@
 title: Hardboiled Wonderland
 subtitle:
 description:
-author: Luna Chiang
-language: zh-Hans
-timezone: Asia/Shanghai
+author: Liyan Jiang
+language: 
+  - zh-cn
+  - en
+timezone: Europe/Berlin
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://gnostikoi.github.io
+url: http://gnoluna.github.io/blog
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -62,7 +64,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: 'Chic'
 
 plugin: hexo-generator-feed
 
@@ -76,7 +78,7 @@ feed:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:Gnostikoi/gnostikoi.github.io.git
+  repo: git@github.com:gnoluna/blog.git
   branch: master
 
 search:
