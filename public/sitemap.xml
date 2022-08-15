@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/index.html</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/categories/index.html</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/about/index.html</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2016/06/27/rnn/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2017/09/22/rosseta-stone-jigsaw-puzzel/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2016/06/23/drwpc/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2017/07/08/historyin100objects/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2016/07/03/lstm/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/2017/09/28/magisk-for-pixel/</loc>
+    
+    <lastmod>2022-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>http://gnoluna.github.io/blog</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/nlp/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/word2vec/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/museum/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/lstm/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/Deep-Learning/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/Android/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/Magisk/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/Pixel/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/Deep-Leaning/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/tags/RNN/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/categories/life/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://gnoluna.github.io/blog/categories/Deep-Learning/</loc>
+    <lastmod>2022-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+</urlset>

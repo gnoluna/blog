@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hardboiled Wonderland</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://gnoluna.github.io/blog/"/>
+  <updated>2022-08-15T10:52:27.885Z</updated>
+  <id>http://gnoluna.github.io/blog/</id>
+  
+  <author>
+    <name>Liyan Jiang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>千辛万苦等来了 Magisk 对 Pixel(XL) 的官方支持</title>
+    <link href="http://gnoluna.github.io/blog/2017/09/28/magisk-for-pixel/"/>
+    <id>http://gnoluna.github.io/blog/2017/09/28/magisk-for-pixel/</id>
+    <published>2017-09-28T15:13:40.000Z</published>
+    <updated>2022-08-15T10:52:27.885Z</updated>
+    
+    <content type="html"><![CDATA[<p>自从有了折腾手机的念头，我就从未放弃过给自己的 Pixel sailfish 装上 <a href="https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t3473445">Magisk</a>。毕竟 Xposed 的作者已经以一副要弃坑的姿势搁置这个目前仍相对主流的框架，为了能在抵达欧陆之后玩上<strong>小畜生</strong>以及其他定制需求, Magisk 成了最吸引人的 systemless root 解决方案。然而 Pixel 的 A&#x2F;B partition 造成了各种不兼容。众 Pixel(XL) 用户只能依赖<a href="https://forum.xda-developers.com/apps/magisk/unofficial-google-pixel-family-support-t3639262">非官方支持</a> (此处感谢 goodwin_c)。这在 Android 8.0 之前还都不是事，Oreo 一出我们就只能巴望着 topjohnwu 的更新（为此我还设置了 twitter 提醒 orz）。</p><p>好在 topjohnwu 是个勤劳的开发者，度假回来马上更新了 <a href="https://forum.xda-developers.com/apps/magisk/beta-magisk-v13-0-0980cb6-t3618589">v14.1</a>，感恩。</p><p>目前为止在我的 Pixel sailfish Android 8.0 上没有问题，安装过程中也没出什么幺蛾子。在此记录下安装过程。</p><p><strong>DISCLAIMER: 虽然几乎不可能刷砖，但还是得说一句 Do at your own risk.</strong></p><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ul><li><pre><code>下载 [Magisk v14.1](https://forum.xda-developers.com/attachment.php?s=b12bee961638472dc0099d6e042e0cb4&amp;attachmentid=4285325&amp;d=1506549792)</code></pre><ul><li><pre><code>下载 [twrp-3.1.1-0-fastboot-sailfish.img](https://dl.twrp.me/sailfish/twrp-3.1.1-0-fastboot-sailfish.img.html) (已经刷过 TWRP recovery 的可以忽略这项)。然后重命名为 twrp.img，出于方便键入的考虑。</code></pre><ul><li><pre><code>下载 [Magisk Manager v5.3.5](https://github.com/topjohnwu/MagiskManager/releases/download/v5.3.5/MagiskManager-v5.3.5.apk)</code></pre></li></ul></li></ul></li><li>电脑上安装 android-platform-tools (会用到 adb 和 fastboot)</li><li>手机已解锁 OEM</li><li>手机上设置开启 PIN 或者 Pattern 密码（要不然进入 recovery 之后文件夹会被加密完全找不到想要的文件）</li></ul><p><strong>特别提示</strong> 如果你之前折腾过，要刷回 Pixel 的原厂 boot.img 或者刷入 <a href="https://forum.xda-developers.com/attachment.php?attachmentid=4285327&d=1506549946">Magisk Uninstaller</a></p><h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><ol><li>手机链接电脑，将 <strong>Magisk-v14.1(1410).zip</strong> 和 <strong>MagiskManager-v5.3.5.apk</strong> 放入存储中</li><li>开启 usb 调试</li><li><code>adb devices</code> 确认手机被识别到</li><li><code>adb reboot bootloader</code> 或者关机长按**电源+音量-**进入 bootloader 模式。</li><li><code>fastboot devices</code> 确认手机被识别到</li><li><code>fastboot boot /path/to/twrp.img</code> </li><li>输入密码进入 twrp recovery，选择 install，找到并选中 <strong>Magisk-v14.1(1410).zip</strong>，swipe 刷入。完成后重启</li><li>重启后安装 <strong>MagiskManager-v5.3.5.apk</strong></li><li>看到此界面说明您已经安装成功</li></ol><img src="/uploads/magisk_screenshot.png" width=50% height=50%/><h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><p>新版本发布前一周 Magisk 作者 topjohnwu 就<a href="https://twitter.com/topjohnwu/status/908542227143471104">在 Twitter 上</a>说针对 Pixel A&#x2F;B 分区会有新特性。那就是，Magisk 和 OTA 更新兼得。无法 OTA 更新可以说是 root 之后最不方便的一件事，现在解决了。</p><blockquote><p>Pixel Exclusive Features<br>Surprise surprise! Thanks to the A&#x2F;B partition of Pixel devices, we can actually receive and apply OTAs seamlessly using the stock OTA mechanism and preserve Magisk at the same time! </p></blockquote><p>简单说就是在安装 Magisk 的时候它已经备份了原厂 boot 镜像。在需要 OTA 更新时还原到原厂 boot 接收更新。安装完成后再将 Magisk 装回去 _Install to Second Slot(After OTA)_。重启之后 Magisk 不会被卸载，因为在启动时 Magisk 已经自动给新版本的 boot 打上补丁。</p><p>作者也在文档中添加了 OTA 更新相关的<a href="https://github.com/topjohnwu/Magisk/blob/master/docs/tips.md#ota-installation-tips">指南</a>。亲妈一样的人文关怀。</p><p>Magisk 是好东西哎~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;自从有了折腾手机的念头，我就从未放弃过给自己的 Pixel sailfish 装上 &lt;a href=&quot;https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t
+      
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="http://gnoluna.github.io/blog/tags/Android/"/>
+    
+      <category term="Magisk" scheme="http://gnoluna.github.io/blog/tags/Magisk/"/>
+    
+      <category term="Pixel" scheme="http://gnoluna.github.io/blog/tags/Pixel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>拼图 in Lunatic Mode</title>
+    <link href="http://gnoluna.github.io/blog/2017/09/22/rosseta-stone-jigsaw-puzzel/"/>
+    <id>http://gnoluna.github.io/blog/2017/09/22/rosseta-stone-jigsaw-puzzel/</id>
+    <published>2017-09-22T08:35:46.000Z</published>
+    <updated>2022-08-15T10:52:27.886Z</updated>
+    
+    <content type="html"><![CDATA[<p>两个月前我在苏博以八折 150RMB 的价格买下这幅<a href="http://www.britishmuseumshoponline.org/games+toys/rosetta-stone-jigsaw-puzzle-british-museum-exclusive/invt/cmcp86010">暴虐拼图</a>的时候从没想过有一天能拼完它。</p><p>我和对象第一眼看到它的时候都低估了它的难度。只有 800 片，而且包装上的样图看上去很清晰。于是冲动消费买下。</p><div class="instagram-wrapper"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px auto; padding:0; width:99.375%; width:-webkit-calc(100%- 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/BWH5kgzlKY0/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank"></a></p></div></blockquote></div><script async defer src="//platform.instagram.com/en_US/embeds.js"></script><p>打开包装惊呆。</p><p><img src="/uploads/jigsaw.jpg"></p><p>exo me? 这清晰度和包装上说好的不一样啊。这怎么拼？拼完不瞎了？当场有了转卖给对象的冲动。虽然这么说，旅游结束之后回到家还是马上开工了。</p><p>我对拼拼图的经验只有小时候拼的那种 250 片，500 片的儿童拼图，几乎没有难度。按照之前的经验，一般是先搭个框，然后再慢慢从四周往中间补。这是个异形拼图，但异形对难度的影响和图片清晰度比简直不值一提。所以我就麻利地拼好了框 + 左上角的一小块被照亮的部分。</p><p><img src="/uploads/jigsaw1.jpg"></p><p>然后？然后这个拼图就这么躺了一个月……</p><p>它不能像常规的拼图一样按颜色初步分类，因为各部分之间的颜色差异实在太小啦。所以我一开始就按照石碑上的三种文字分了类——象形文、埃及文、希腊文。希腊文非常好辨认，而且位于石碑最靠下的三分之一偏暗的位置。埃及文和象形文就很难分开，尤其是象形文比较大，拆成碎片后简直和埃及文不分彼此。就这样勉强分成了三类，分完后就相当于分别完成三幅<a href="https://www.amazon.com/Krypt-Silver-Piece-Puzzle-Challenge/dp/B0009QXXB8">密银拼图</a>。看不懂碑文所以无法根据文字内容判断附近的碎片是那些。颜色变化起到的帮助微乎其微，只是石碑左边比右边亮一点。那就只好暴力破解呗。</p><p><img src="/uploads/jigsaw2.jpg"></p><p>就这样一点一点填。效率最低的时候一小时只拼不到十片。要不是因为临近出国我妈妈嫌我东西占位置，我估计会一直拖延下去。</p><p>完成图（血泪</p><div class="instagram-wrapper"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px auto; padding:0; width:99.375%; width:-webkit-calc(100%- 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/BZOcPn1n6w2/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank"></a></p></div></blockquote></div><script async defer src="//platform.instagram.com/en_US/embeds.js"></script><p>历时两个月，虽然大部分时间都是摊在地上。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;两个月前我在苏博以八折 150RMB 的价格买下这幅&lt;a href=&quot;http://www.britishmuseumshoponline.org/games+toys/rosetta-stone-jigsaw-puzzle-british-museum-exclusive
+      
+    
+    </summary>
+    
+      <category term="life" scheme="http://gnoluna.github.io/blog/categories/life/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>参观完了上博「大英百物」展</title>
+    <link href="http://gnoluna.github.io/blog/2017/07/08/historyin100objects/"/>
+    <id>http://gnoluna.github.io/blog/2017/07/08/historyin100objects/</id>
+    <published>2017-07-08T07:15:46.000Z</published>
+    <updated>2022-08-15T10:52:27.885Z</updated>
+    
+    <content type="html"><![CDATA[<p>上博的这个特展从定下日期开始就进入了我的毕业旅行计划。选择七月的第一个月去人潮汹涌的上海可以说是很不明智的，为了掩盖打飞的看展的事实（不是第一次干这事）我们还在前一天去了迪士尼，无可避免地成为了暑期人流的一部分。经历了两天排队，短期内已经不想看到人群了。</p><p>开始关注这个展是因为<a href="https://ipn.li/bowuzhi/65/">博物志播客 #65 </a>国博策展人的访谈，得知暑假会巡展到上海，满心期待。翻出14年购买的套装书<a href="https://book.douban.com/subject/25746578/">《大英博物馆世界简史》</a>又看了一遍。观展当日非常庆幸自己出发前先做了功课，省下和人群挤着看说明牌的力气。</p><p>开展第一天就被新闻中排队的图片吓到差点怂了。经历了开展后第一个周末高峰期后上博增派工作人员并设置了参观特展的单独入口（南门）以应对汹涌人潮。我们是 7 月 4 日去的，也就是开展后的第7天，依然需要痛苦地排队，但是没有前几天排 3 小时那么恐怖了。早上 8 点 35 左右到达上博，坐地铁至大世界站下车走一段路就到。排队人群大多是放了暑假的大中小学生，也有老爷爷老奶奶带着孙子来看展（觉得特别温馨）。9 点开始放人后队伍就开始缓慢移动，排到大概 9 点 40 进馆安检，进了博物馆之后仍然要排 20 分钟左右的队，开始参观的时间大概是 10 点出头。总计排队时间大概一个半小时，这么一想感觉大清早六点多来排队的第一批进馆的人好亏，生生等3小时。</p><p><img src="/uploads/front.jpg" alt="大英百物特展馆门口"><span class="my-image-caption">大英百物特展馆门口</span></p><p>进馆前可以去服务台领一本导览册，一边排队一边看，里面有几个重要展品和展线的介绍。</p><p><img src="/uploads/brochure.jpg" alt="大英博物馆百物展导览册"><span class="my-image-caption">大英博物馆百物展导览册</span></p><p>展馆不大，文物数量又多，稍显拥挤。刚进门的木乃伊棺附近就停留着一堆人，小件展品前面的人群更是移动缓慢。一些在书上见过的展品我就直接不看说明牌了。比如「奥杜威手斧」，实物真的非常精致。书中插图只展示了文物的正面，不看完整个章节真的会觉得不起眼。展览中可以很好地观察它的侧面和背面，想象它的用途，然后就可以说服自己这是石器时代的瑞士军刀了。同样出土于奥杜威的手斧具有圆润的底部，可以想象那是手持的部位。「大洪水记录板」比我想象的要迷你，大概只有成年人巴掌那么大，博物馆商店里还有售卖它的等比例摆件。参观到一半才发现，展品不是原封不动地出自同系列套装书中的展品，而是出于运输和维护的考虑选择了经得起飘洋过海折腾的同样具有代表性的 100 件。想要一睹真容的「莱因德纸草书」、「莫尔德黄金披肩」也意料之内地没有见到。但是看到了「奥尔梅克面具」已经不枉此行。从书中一眼认出是 JOJO 第二部中石假面原型时就激动得嗷嗷叫。(想戴上…) 但是作为挂饰的石假面实际上只有婴儿的脸那么大，我还是停着看了很久。</p><p>一些大件非常受欢迎，比如「密特拉屠牛像」、「拉美西斯二世雕像」、「迪蒂摩斯墓碑」这些，可以更近地看到纹理。惊喜的是书中没有收录的「阿兹特克恶灵像」快要萌哭我了，看完解说后也一阵唏嘘，中美洲的民俗真的相当有趣。参观到「湿婆和雪山神女像」的时候是铺面而来满溢的放浪不羁，想象虔诚的信徒在他们面前摆水果的样子。为此我回去后特意翻了书，摘出这样一句：</p><blockquote><p>神也许不应该被设定为孤单的个体，而该是一堆恩爱的快乐夫妻。肉体欢愉不是人类的堕落，而是神性不可或缺的一部分。</p></blockquote><p>或许这也是印度教「包容性」的一部分奥义。</p><p>一些展品旁边有个显示屏来播放解说视频，大部分人都不会在这里驻足，而是依赖解说器或是阅读展板。展线迂回，像走迷宫一样有探寻的乐趣，但是部分通道仍然造成了拥塞。参观者素质都蛮高的，不像之前南博、苏博经常有儿童吵闹和大声说话的声音在展馆里回荡。但因为人实在太多了，工作人员需要不停地重复「请不要拍照」、「看完展品请继续向前走」来维持秩序，所以馆内也不是特别的安静。展馆入口处就有禁止拍照的告示牌，然而整个参观过程中大部分人都拿出手机拍照了。也有遵守规定的人用笔和本子记录。整个参展过程还算有序。</p><p>上博选出的 101 件展品是二维码，这事我在出发前就得知并大跌眼镜。展馆内用来陈列二维码及介绍的空间大概有一小间房间那么大，一大幅二维码存在感超强让人无处躲藏。走近看这个二维码还是由展品图片拼成的，但是扫不出来。（告诉我扫不出来的为什么能叫二维码？）于是走出展馆，参观完毕，已经接近 12 点。</p><p>来之前就对这个展的周边充满期待，但事实上能让我冲动消费的纪念品几乎没有。倒是之前在苏博冲动消费了一套也是大英出品的罗塞塔石碑拼图，虽然鬼畜但诚意满满。我现在就在努力拼它。</p><div class="instagram-wrapper"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px auto; padding:0; width:99.375%; width:-webkit-calc(100%- 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/BWH5kgzlKY0/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank"></a></p></div></blockquote></div><script async defer src="//platform.instagram.com/en_US/embeds.js"></script></br><p>几个摆件确实既可爱又精致，帆布包雨伞丝巾什么的没有兴趣，于是最终我买了送给小朋友的绘本和萌萌哒曲奇饼干。（不幸的是我们在机场等延误飞机的时候就把它吃掉了……</p><p><img src="/uploads/cookies.jpg" alt="埃及的猫女神芭丝特和丰饶女神伊希丝"><span class="my-image-caption">埃及的猫女神芭丝特和丰饶女神伊希丝</span></p><p>总而言之，大英百物展不坑，值得排队。大部分看腻了青铜器和各类陶陶罐罐的参观者都非常喜欢这种 exotic 的体验。 而且整个 A History of the World in 100 Objects 项目主要想展示的就是探寻不同文明的发展之间的微妙联系，如果有心看展的话可以感觉到它想传达的信息。唯一不好的就是人太多了，所以有条件还是错峰观展吧。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;上博的这个特展从定下日期开始就进入了我的毕业旅行计划。选择七月的第一个月去人潮汹涌的上海可以说是很不明智的，为了掩盖打飞的看展的事实（不是第一次干这事）我们还在前一天去了迪士尼，无可避免地成为了暑期人流的一部分。经历了两天排队，短期内已经不想看到人群了。&lt;/p&gt;
+&lt;p&gt;开始
+      
+    
+    </summary>
+    
+      <category term="life" scheme="http://gnoluna.github.io/blog/categories/life/"/>
+    
+    
+      <category term="museum" scheme="http://gnoluna.github.io/blog/tags/museum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读: Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition</title>
+    <link href="http://gnoluna.github.io/blog/2016/07/03/lstm/"/>
+    <id>http://gnoluna.github.io/blog/2016/07/03/lstm/</id>
+    <published>2016-07-03T13:15:53.000Z</published>
+    <updated>2022-08-15T10:52:27.885Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="LSTM-主要解决的问题"><a href="#LSTM-主要解决的问题" class="headerlink" title="LSTM 主要解决的问题"></a>LSTM 主要解决的问题</h3><h4 id="Vanishing-Gradient-Problem"><a href="#Vanishing-Gradient-Problem" class="headerlink" title="Vanishing Gradient Problem"></a>Vanishing Gradient Problem</h4><blockquote><p>The main difficulty lies in the well-known vanishing gradient problem which means that the gradiant that is propagated back through the network either decays or grows expontentially.</p></blockquote><p>举个例子</p><blockquote><p>“The man who wore a wig on his head went inside.”</p></blockquote><p>这句话的主语 man 和谓语 went 之间插入了一个定语从句 who wore a wig on his head，使得两个关键词之间相隔非常远。传统 RNN 不能够捕获这种长距离词汇间的联系，当解析到 went 的时候，主语 man 可能已经被遗忘了，因为 BPTT 通常限制在若干有限步长内。根据链式法则，梯度可以这样计算</p><p>$$ \frac{\partial E_3}{\partial W} &#x3D; \sum_{k&#x3D;0}^{3}\frac{\partial E_3}{\partial \hat{y}_3}\frac{\partial \hat{y}_3}{\partial s_3} \left(\sum_{j&#x3D;k+1}^{3}\frac{\partial s_j}{\partial s_{j-1}}\right)\frac{\partial s_k}{\partial W} $$</p><p>tanh 函数的导数在接近 $3$ 和 $-3$ 时趋近于 $0$，在多次矩阵乘法中能使远距离时间步的梯度迅速收缩为 $0$， 意味着几步以前的词对当前状态几乎没有贡献。</p><p>一个解决方法是使用 <a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)">ReLU</a> 取代 sigmoid 或 tanh. 因为 ReLU 的导数要么是 0 要么是 1. 更常见的解决方法是使用 LSTM(Long Short-Term Memory) 或 GRU(Gated Recurrent Unit) 来优化 RNN 中隐层的计算。</p><h3 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM(Long Short-Term Memory)"></a>LSTM(Long Short-Term Memory)</h3><p>LSTM 本质上只是改进了 RNN 架构中隐层的计算。如果把 LSTM 的隐层当成一个黑盒的话，那么它和 RNN　并没有什么区别。LSTM 的主要特点是它的门机制 (gate mechanism)： input gate, forget gate, output gate. 这三个门进行同样的运算，都是通过 sigmoid 函数将向量的值压缩为 0 或 1. 0 表示丢弃输入值，1 表示让这个输入值通过门并参与到后续运算中。然后和作为状态值的向量(也就是下文要提到的 cell state)逐元素相乘来决定是否让输入向量对状态值作出更新。</p><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-gate.png" alt="lstm_gate"><span class="my-image-caption">lstm_gate</span></p><table><thead><tr><th>Gate</th><th>含义</th></tr></thead><tbody><tr><td>input gate</td><td>新计算出来的状态向量有多少要加入后续运算中</td></tr><tr><td>forget gate</td><td>过滤先前计算出的状态值，即选择要遗忘哪些信息</td></tr><tr><td>ouput gate</td><td>有多少内部状态信息要暴露给外层神经网络（更高层神经网络或是下一个时间步）</td></tr></tbody></table><p>如果把 input gate 的输出全部设为 1， forget gate 的输出全部设为 0 ， output gate 的输出全部设为 1， 那么这就是个普通的 RNN。而这三个门的作用就是为了控制隐层中有多少信息需要保留，有点类似于遮罩.</p><p>colah 的博客逐步描述了 LSTM 的机制，文章中还有非常直观的可视化。</p><p>LSTM 主要由下面五个激活函数组成：</p><p>$$i_t &#x3D; \sigma(W_{ix} x_t + W_{im} m_{t-1}+W_{ic} c_{t-1} + b_i)$$<br>$$f_t &#x3D; \sigma(W_{fx} x_t + W_{mf} m_{t-1} + W_{cf} c_{t-1} + b_f)$$<br>$$c_t &#x3D; f_t \odot c_{t-1} + i_t \odot g(W_{cx}x_t + W_{ch}h_{t-1} + b_c)$$<br>$$o_t &#x3D; \sigma(W_{ox}x_t + W_{oh}h_{t-1}+W_{oc}c_t + b_o)$$<br>$$h_t &#x3D; o_t \odot h(c_t)$$<br>$$y_t &#x3D; W_{yh}h_t + b_y$$</p><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td>W</td><td>权重矩阵，比如 $W_{ix}$ 表示 input gate 到输入向量的权重，以此类推</td></tr><tr><td>b</td><td>偏差向量（bias vector），比如 $b_i$ 是 input gate bias vector</td></tr><tr><td>$\sigma$</td><td>logistic sigmoid 函数</td></tr><tr><td>i</td><td>input gate</td></tr><tr><td>f</td><td>forget gate</td></tr><tr><td>o</td><td>output gate</td></tr><tr><td>c</td><td>激活向量(cell activation vector)</td></tr><tr><td>h</td><td>输出激活向量（cell ouput activatioin vector)</td></tr><tr><td>$\odot$</td><td>矩阵逐元素相乘 (elementwise product)</td></tr></tbody></table><h4 id="Cell-State"><a href="#Cell-State" class="headerlink" title="Cell State"></a>Cell State</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-C-line.png" alt="lstm_cellstate"><span class="my-image-caption">lstm_cellstate</span></p><p>LSTM 的状态参数是为每个隐层节点 (memory cell) 所共享的，换言之就是每个 memory cell 对整个反应链的状态作出修改。colah 将这种 cell state 更新机制类比为传送带。cell state 经过隐层中每个时间步上 memory cell 的更新，而所谓更新就是一些线性运算。</p><h4 id="Forget-Gate"><a href="#Forget-Gate" class="headerlink" title="Forget Gate"></a>Forget Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-f.png" alt="lstm_forgetgate"><span class="my-image-caption">lstm_forgetgate</span></p><p>forget gate 的输入包含： 当前时间步的输入向量，上一个时间步中 ouput gate 的输出向量。通过一次 sigmoid 变换映射到 0,1. $f_t$ 决定了旧的状态信息中有多少要遗弃，所以直接 cell state 进行逐元素相乘。</p><h4 id="Input-Gate"><a href="#Input-Gate" class="headerlink" title="Input Gate"></a>Input Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-i.png" alt="lstm_inputgate"><span class="my-image-caption">lstm_inputgate</span></p><p>这个步骤中 LSTM 做的是把新的信息加入 cell state 中，这项工作包含两部分： input gate layer 和 tanh layer. Input gate 层将决定 cell state 中的哪些值需要被更新，然后 tanh 层生成一组候选值 $\tilde{C}_t$ 来取代 cell state 中需要被更新的旧值. 然后将两个向量逐元素相乘，再与 cell state 相加。input gate 的输出向量也是只有 0 和 1，逐元素相乘后只有为 1 的那些状态量会被更新，所以 $i_t$ 起到的其实是一个遮罩的作用。</p><h4 id="Ouput-Gate"><a href="#Ouput-Gate" class="headerlink" title="Ouput Gate"></a>Ouput Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-o.png" alt="lstm_outputgate"><span class="my-image-caption">lstm_outputgate</span></p><p>输出仍然是基于当前时间步的 cell state， 这部分同样由一个 sigmoid layer 和 tanh layer 组成。sigmoid 层决定哪些状态信息要被输出，tanh 层将当前 cell state 压缩到 $(-1,1)$ 区间内。然后执行逐元素相乘，产生这个单元的输出变量。输出变量同时作为下一个单元的 $h_t-1$ 加入到循环中。</p><h3 id="References-参考资料"><a href="#References-参考资料" class="headerlink" title="References | 参考资料"></a>References | 参考资料</h3><p><a href="https://arxiv.org/pdf/1402.1128.pdf">Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition</a><br><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks – colah’s blog</a><br><a href="http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backpropagation-through-time-and-vanishing-gradients/">WILDML: Backpropagation Through Time and Vanishing Gradients</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;LSTM-主要解决的问题&quot;&gt;&lt;a href=&quot;#LSTM-主要解决的问题&quot; class=&quot;headerlink&quot; title=&quot;LSTM 主要解决的问题&quot;&gt;&lt;/a&gt;LSTM 主要解决的问题&lt;/h3&gt;&lt;h4 id=&quot;Vanishing-Gradient-Proble
+      
+    
+    </summary>
+    
+      <category term="Deep Learning" scheme="http://gnoluna.github.io/blog/categories/Deep-Learning/"/>
+    
+    
+      <category term="lstm" scheme="http://gnoluna.github.io/blog/tags/lstm/"/>
+    
+      <category term="Deep Learning" scheme="http://gnoluna.github.io/blog/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Introduction to RNNs</title>
+    <link href="http://gnoluna.github.io/blog/2016/06/27/rnn/"/>
+    <id>http://gnoluna.github.io/blog/2016/06/27/rnn/</id>
+    <published>2016-06-27T13:02:57.000Z</published>
+    <updated>2022-08-15T10:52:27.886Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Abstract-简介"><a href="#Abstract-简介" class="headerlink" title="Abstract | 简介"></a>Abstract | 简介</h3><h4 id="Language-Model-语言模型"><a href="#Language-Model-语言模型" class="headerlink" title="Language Model | 语言模型"></a>Language Model | 语言模型</h4><p>语言模型主要解决两件事</p><ul><li>能够对计算机生成的句子进行打分，分数高低取决于这个句子有多大概率在现实中出现。分数作为一种语法和语义上的度量</li><li>能够产生新的句子。比如用莎士比亚作品作为语料库，可以产生莎士比亚文风的句子。</li></ul><h4 id="Recurrent-Nerual-Network-循环神经网络"><a href="#Recurrent-Nerual-Network-循环神经网络" class="headerlink" title="Recurrent Nerual Network | 循环神经网络"></a>Recurrent Nerual Network | 循环神经网络</h4><p>关于统计语言模型， Bengio 曾提出过一个使用定长文本训练的前馈神经网络。但这个模型的主要问题是前馈网络依赖于一个预设的文本长度，不能针对不同语境作出动态变化。循环神经网络针对这点作出改进：RNN 不限制文本的长度，而且文本信息能够在网络中循环任意时间。</p><p>RNN 的主要思想是充分利用序列化信息之间时间上的关联。传统神经网络将所有输入信息作为相互独立的信息来看待，但在很多情况下（尤其是自然语言处理的问题上）并不是个好的想法。因为语境信息对于语言模型是至关重要的，一个词在某个位置出现的概率很大程度上受前文中其他词的影响。RNN 之所以叫循环神经网络是因为它对序列中每个词的处理是基于前面词的状态。可以理解为 RNN 是一个带有记忆的模型，它能够缓存之前的运算结果，这些状态结果会一直影响接下来的神经元运算。理论上 RNN 能够充分利用任意长度序列的信息，但出于对效率因素的考虑只回看若干步。</p><p><a href="https://iamtrask.github.io/2015/11/15/anyone-can-code-lstm/">trask 博客</a>中的这个 gif 图片能够很直观得看出 RNN 的运行过程。</p><p><img src="/uploads/recurrence_gif.gif" alt="RNN_GIF"><span class="my-image-caption">RNN_GIF</span></p><p>图中展示了 4 个时间步 (timestep) 中隐层 (hidden layer) 的变化。第一个时间步中隐层的计算完全依赖于输入；第二个时间步中隐层的输入来源于第一个隐层的输出和第二个时间步的输入。到了第四个时间步，隐层已经包含了所有输入信息。到第五个时间步，隐层就要决定哪些信息要留下，哪些信息要被覆盖。因此隐层节点越多就能记住更长的时间段内的信息，隐层节点数量意味着循环神经网络的记忆容量。</p><p>这样的架构中，输入不仅仅是单纯的输入，输入信息不停地更新 RNN 的 “memory”， 输出是基于某个状态下的 “memory”. 即便某个时间步内没有任何输入, memory 也会随着时间动态发生变化。</p><p>先通过一个最基础的 RNN 了解一下它的架构。 Simple recurrent neural network (or Elman Network）</p><table><thead><tr><th>符号表示</th><th>含义</th></tr></thead><tbody><tr><td>$x(t)$</td><td>t 时间步的输入信息</td></tr><tr><td>$y(t)$</td><td>t 时间步的输出信息</td></tr><tr><td>$s(t)$</td><td>t 时间步的隐层（神经网络的状态）</td></tr><tr><td>$U$</td><td>隐层和隐层之间的传导矩阵 synapse_h</td></tr><tr><td>$V$</td><td>隐层和输出层之间的传导矩阵 synapse_1</td></tr><tr><td>$f(z)$</td><td>sigmoid 激活函数</td></tr><tr><td>$g(z_m)$</td><td>softmax 函数</td></tr></tbody></table><p>$$ x(t) &#x3D; w(t) + s(t-1) $$</p><p>$$ s_j(t) &#x3D; f\left(\sum_i x_i(t)u_ij \right)$$</p><p>$$ y_k(t) &#x3D; g\left(\sum_j s_j(t)v_kj \right)$$</p><p>$$ s.t. f(z) &#x3D; \frac{1}{1+e^{-z}} , g(z_m) &#x3D; \frac{e^{z_m}}{\sum_{k}e^{z_k}}$$</p><p>$s(0)$ 被初始化为值很小的向量，比如 0.1 。处理大量数据时初始化不是关键因素。隐层节点数量大约在 30-500 之间，反应了训练数据的数量。</p><h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p>神经网络大约要经过 10-20 个 epoch 才能达到比较好的收敛效果。BP 算法和 SGD(Stochastic Gradient Descent) 是比较常见的训练方法。设置 learning rate 为 0.1, 每完成一个 epoch 就要在验证集上进行测试，通过观察验证集的对数似然来判断模型是否收敛。如果模型没有显著提高，就将 learning rate 减半，接着进行下一个 epoch .</p><h4 id="Backpropagation-Through-Time-BPTT"><a href="#Backpropagation-Through-Time-BPTT" class="headerlink" title="Backpropagation Through Time (BPTT)"></a>Backpropagation Through Time (BPTT)</h4><p>gif 动态图来自<a href="https://iamtrask.github.io/2015/11/15/anyone-can-code-lstm/">trask 博客</a></p><p><img src="/uploads/backprop_through_time.gif" alt="bptt"><span class="my-image-caption">bptt</span></p><p>BPTT 是 BP 算法针对循环神经网络的一个改进版本。BPTT 的参数被所有时间步共享。每个输出的梯度依赖于之前的时间步，其实就是对应微积分中的链式法则。例如为了计算 $t &#x3D; 4$ 时的梯度，需要反向传播 3 次更新权重。BPTT 算法仍有不能解决的问题，比如词汇间的长期依赖(long-term dependency). 两个词隔得很远，但它们之间确有联系。在时间步到达第二个词的时候，第一个词已经被遗忘了。这就是所谓的梯度消失&#x2F;梯度爆炸 (vanishing&#x2F;exploding gradient) 问题。针对这个问题已经有了好的解决方法，如 <a href="https://en.wikipedia.org/wiki/Long_short-term_memory">LSTM</a>.  LSTM 的架构原则上和一般 RNN 没有什么不同，但在隐层的计算上用了一些技巧，能够选择哪些重要的信息值得记忆。对于捕获词汇间的长期依赖有很大的贡献。</p><h3 id="Reference-参考资料"><a href="#Reference-参考资料" class="headerlink" title="Reference | 参考资料"></a>Reference | 参考资料</h3><p><a href="http://www.fit.vutbr.cz/research/groups/speech/publi/2010/mikolov_interspeech2010_IS100722.pdf">Mikolov: Recurrent neural network based language model</a><br><a href="http://www.fit.vutbr.cz/research/groups/speech/publi/2011/mikolov_icassp2011_presentation_rnnlm-extension.pdf">Mikolov: Extensions of recurrent neural network language model</a><br><a href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">WildML:Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a><br><a href="https://iamtrask.github.io/2015/11/15/anyone-can-code-lstm/">trask: Anyone Can Learn To Code an LSTM-RNN in Python (Part 1: RNN)</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Abstract-简介&quot;&gt;&lt;a href=&quot;#Abstract-简介&quot; class=&quot;headerlink&quot; title=&quot;Abstract | 简介&quot;&gt;&lt;/a&gt;Abstract | 简介&lt;/h3&gt;&lt;h4 id=&quot;Language-Model-语言模型&quot;&gt;&lt;a h
+      
+    
+    </summary>
+    
+      <category term="Deep Learning" scheme="http://gnoluna.github.io/blog/categories/Deep-Learning/"/>
+    
+    
+      <category term="Deep Leaning" scheme="http://gnoluna.github.io/blog/tags/Deep-Leaning/"/>
+    
+      <category term="RNN" scheme="http://gnoluna.github.io/blog/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读: Distributed Representation of Words and Phrases and their Compositionality</title>
+    <link href="http://gnoluna.github.io/blog/2016/06/23/drwpc/"/>
+    <id>http://gnoluna.github.io/blog/2016/06/23/drwpc/</id>
+    <published>2016-06-23T12:41:10.000Z</published>
+    <updated>2022-08-15T10:52:27.885Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>这篇文章是 <a href="https://zh.wikipedia.org/zh/Word2vec">Word2Vec</a> 作者关于 <a href="https://scholar.google.com/citations?user=oBu8kMMAAAAJ&hl=zh-CN">Mikolov</a> 的 Skip-gram 模型提出的改进和扩展，主要是提升训练速度和词向量的质量。</p><h3 id="关于-Skip-gram"><a href="#关于-Skip-gram" class="headerlink" title="关于 Skip-gram"></a>关于 Skip-gram</h3><p>Skip-gram 能够高效地从大量文本中训练出词向量。与其他神经网络架构模型不同的是，它不涉及矩阵乘法，大大提升了训练效率。经过学习后的词向量甚至能够进行线性运算。比如： vec(“Madrid”) - vec(“Spain”) + vec(“France”) is closer to vec(“Paris”)</p><p><img src="/uploads/skipgram.png" alt="skipgram"><span class="my-image-caption">skipgram</span></p><p>Skip-gram 的训练目标是能够预测文本中某个词周围可能出现的词。比如，现在有一份文档（去掉标点符号）由 $T$ 个词组成，$w_1,w_2,w_3,…,w_T$， skip-gram 的目标函数就是最大化它们的平均对数概率</p><p>$$ \frac{1}{T} \sum_{t&#x3D;1}^{T} \sum_{-c \leq j \leq c} \log p(w_{t+j} | w_t) $$</p><p>c 是上下文长度，也就是中心词 $w_t$ 的前后各 c 个词， c 越大意味着训练样本越多，精度也就越高，但时间开销大。以 softmax 的方式计算 $p(w_O|w_I)$</p><p>$$ p(w_O|w_I) &#x3D; \frac{\exp({v’_{w_O}}^\top v_{w_I})}{\sum_{w&#x3D;1}^{W} \exp({v’_{w}}^\top v\_{w_I})} $$</p><p>$W$ 是总词汇量，$v_w$ 和 $v’_w$ 是词 $w$ 的输入和输出变量。然而这个公式是不现实的，因为计算开销随着总词汇量 $W$ 而增长。</p><h3 id="基于-Skip-gram-的扩展"><a href="#基于-Skip-gram-的扩展" class="headerlink" title="基于 Skip-gram 的扩展"></a>基于 Skip-gram 的扩展</h3><h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>skip-gram 中需要 $W$ 个输出节点来计算概率分布，而 Hierarchical Softmax 只需要大约 $\log_2(W)$ 个输出节点，因为它的输出层采用了二叉树的表现形式。每个节点是一个词，它的子节点存储是与这个词相关的词。节点中只存储该词与子节点词的相对概率。总词汇中的每个词都有一条从二叉树根部到自身的路径。用 $n(w,j)$ 来表示从根节点到 w 词这条路径上的第 j 个节点。用 $ch(n)$ 来表示 $n$ 的任意一个子节点。</p><p>那么 Hierarchical Softmax 可以表示为</p><p>$$ p(w | w_I) &#x3D; \prod_{j&#x3D;1}^{L(w)-1} \sigma ([[ n(w,j+1) &#x3D; ch(n(w,j))]]\cdot {v’_{n(w,j)}}^\top v_{w_I}) $$</p><p>$$ s.t. \sigma (x)&#x3D; \frac{1}{1+\exp(-x)} $$</p><p>$ \sum_{w&#x3D;1}^{W}p(w|w_I) &#x3D; 1 $ 是可以验证的，这样一来 $ \log p(w_O|w_I)$ 和 $\nabla \log p(w_O|w_I)$ 的计算开销就和 $L(W_O)$ 成比例。而 $L(W_O)$ 不会超过 $\log W$. Word2Vec 中使用的是哈夫曼二叉树，高频词汇编码较短，低频词汇编码较长。</p><h4 id="Negative-Sampling"><a href="#Negative-Sampling" class="headerlink" title="Negative Sampling"></a>Negative Sampling</h4><p>NCE(Noise Contrastive Estimation):好的模型能够通过逻辑斯蒂回归将数据从噪声中区别出来</p><p>因为 skip-gram 更关注于学习高质量的词向量表达，所以可以在保证词向量质量的前提下对 NCE 进行简化。于是定义了 NEG(Negative Sampling)</p><p>$$ \log \sigma({v’_{w_O}}^\top v_{w_I} )+ \sum_{i&#x3D;1}^{k}\mathbb{E}_{w_i \sim P_n(w)}[\log \sigma(-{v’_{w_i}}^\top v_{w_I})] $$</p><p>这个公式用来替代 skip-gram 目标函数中的 $\log p(w_O|w_I)$. $ P_n(w)$ 是词 $n$ 周围的噪声词分布（NCE 和 NEG 都有这个参数）。这个公式是用逻辑斯蒂回归从 $k$ 个负例中区别出目标词汇。对于小的训练集 $k$ 的最佳取值是 5-20， 对于大的训练集 $k$ 的取值会更小，大概 2-5. NCE 和 NEG 的区别在于 NCE 在计算时需要样本和噪音分布的数值概率，而 NEG 只需要样本。</p><h4 id="Subsampling"><a href="#Subsampling" class="headerlink" title="Subsampling"></a>Subsampling</h4><p>subsampling 用于解决这样的问题：在英文中有大量高频词诸如 “in”, “the”, “a”, 这些词提供的信息量非常少。比如 “Paris” 和 “France” 的共现率明显比 “France” 和 “The” 的共现率低，但 “Paris” 和 “France” 明显更有用。</p><p>为了解决高频和低频词汇间的不平衡，每个词汇的频率有一定概率被丢弃，概率由公式得出：</p><p>$$ P(w_i) &#x3D; 1 - \sqrt{\frac{t}{f(w_i)}}$$</p><p>$ f(w_i)$ 是词 $w_i$ 的概率. $t$ 是参数，作为淘汰词的门限，通常情况下约为 $10^{-5}$. 当词汇的频率高于 $t$ 就有一定概率被淘汰掉。</p><h3 id="处理-Phrase"><a href="#处理-Phrase" class="headerlink" title="处理 Phrase"></a>处理 Phrase</h3><p>这部分主要解决专有名词的问题，比如期刊杂志的名字 “New York Times” 并不是单词 “New York” 和 “Times” 词义的简单组合，所以要把它们当成一个词组来看待。作者用了一种简单的数据驱动方式来识别这些专有名词。对于两个词 $w_i, w_j$：</p><p>$$ score(w_i, w_j) &#x3D; \frac{count(w_i w_j) - \delta}{count(w_i) \times count(w_j)}$$</p><p>其中 $\delta$ 是协同系数，用来避免太多无关的词被组合到一起。</p><h3 id="资源下载"><a href="#资源下载" class="headerlink" title="资源下载"></a>资源下载</h3><p><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjf3prT0b3NAhVI4mMKHVQCCwAQFggeMAA&url=https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf&usg=AFQjCNFvn2t3S41dxIocYbx5EpeOwmjXVQ&sig2=4bbJwW1O7AnHYZfFbA2pIQ">Distributed Representation of Words and Phrases and their Compositionality</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;这篇文章是 &lt;a href=&quot;https://zh.wikipedia.org/zh/Word2vec&quot;&gt;Word2Vec&lt;/a&gt; 作者关于
+      
+    
+    </summary>
+    
+      <category term="Deep Learning" scheme="http://gnoluna.github.io/blog/categories/Deep-Learning/"/>
+    
+    
+      <category term="nlp" scheme="http://gnoluna.github.io/blog/tags/nlp/"/>
+    
+      <category term="word2vec" scheme="http://gnoluna.github.io/blog/tags/word2vec/"/>
+    
+  </entry>
+  
+</feed>

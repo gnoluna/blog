@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-cn,en,default">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Liyan Jiang">
+
+
+
+
+
+<title>论文阅读: Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition | Hardboiled Wonderland</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Liyan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Liyan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">论文阅读: Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Liyan Jiang</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">七月 3, 2016&nbsp;&nbsp;15:15:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Deep-Learning/">Deep Learning</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="LSTM-主要解决的问题"><a href="#LSTM-主要解决的问题" class="headerlink" title="LSTM 主要解决的问题"></a>LSTM 主要解决的问题</h3><h4 id="Vanishing-Gradient-Problem"><a href="#Vanishing-Gradient-Problem" class="headerlink" title="Vanishing Gradient Problem"></a>Vanishing Gradient Problem</h4><blockquote>
+<p>The main difficulty lies in the well-known vanishing gradient problem which means that the gradiant that is propagated back through the network either decays or grows expontentially.</p>
+</blockquote>
+<p>举个例子</p>
+<blockquote>
+<p>“The man who wore a wig on his head went inside.”</p>
+</blockquote>
+<p>这句话的主语 man 和谓语 went 之间插入了一个定语从句 who wore a wig on his head，使得两个关键词之间相隔非常远。传统 RNN 不能够捕获这种长距离词汇间的联系，当解析到 went 的时候，主语 man 可能已经被遗忘了，因为 BPTT 通常限制在若干有限步长内。根据链式法则，梯度可以这样计算</p>
+<p>$$ \frac{\partial E_3}{\partial W} &#x3D; \sum_{k&#x3D;0}^{3}\frac{\partial E_3}{\partial \hat{y}_3}\frac{\partial \hat{y}_3}{\partial s_3} \left(\sum_{j&#x3D;k+1}^{3}\frac{\partial s_j}{\partial s_{j-1}}\right)\frac{\partial s_k}{\partial W} $$</p>
+<p>tanh 函数的导数在接近 $3$ 和 $-3$ 时趋近于 $0$，在多次矩阵乘法中能使远距离时间步的梯度迅速收缩为 $0$， 意味着几步以前的词对当前状态几乎没有贡献。</p>
+<p>一个解决方法是使用 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)">ReLU</a> 取代 sigmoid 或 tanh. 因为 ReLU 的导数要么是 0 要么是 1. 更常见的解决方法是使用 LSTM(Long Short-Term Memory) 或 GRU(Gated Recurrent Unit) 来优化 RNN 中隐层的计算。</p>
+<h3 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM(Long Short-Term Memory)"></a>LSTM(Long Short-Term Memory)</h3><p>LSTM 本质上只是改进了 RNN 架构中隐层的计算。如果把 LSTM 的隐层当成一个黑盒的话，那么它和 RNN　并没有什么区别。LSTM 的主要特点是它的门机制 (gate mechanism)： input gate, forget gate, output gate. 这三个门进行同样的运算，都是通过 sigmoid 函数将向量的值压缩为 0 或 1. 0 表示丢弃输入值，1 表示让这个输入值通过门并参与到后续运算中。然后和作为状态值的向量(也就是下文要提到的 cell state)逐元素相乘来决定是否让输入向量对状态值作出更新。</p>
+<p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-gate.png" alt="lstm_gate"><span class="my-image-caption">lstm_gate</span></p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>input gate</td>
+<td>新计算出来的状态向量有多少要加入后续运算中</td>
+</tr>
+<tr>
+<td>forget gate</td>
+<td>过滤先前计算出的状态值，即选择要遗忘哪些信息</td>
+</tr>
+<tr>
+<td>ouput gate</td>
+<td>有多少内部状态信息要暴露给外层神经网络（更高层神经网络或是下一个时间步）</td>
+</tr>
+</tbody></table>
+<p>如果把 input gate 的输出全部设为 1， forget gate 的输出全部设为 0 ， output gate 的输出全部设为 1， 那么这就是个普通的 RNN。而这三个门的作用就是为了控制隐层中有多少信息需要保留，有点类似于遮罩.</p>
+<p>colah 的博客逐步描述了 LSTM 的机制，文章中还有非常直观的可视化。</p>
+<p>LSTM 主要由下面五个激活函数组成：</p>
+<p>$$i_t &#x3D; \sigma(W_{ix} x_t + W_{im} m_{t-1}+W_{ic} c_{t-1} + b_i)$$<br>$$f_t &#x3D; \sigma(W_{fx} x_t + W_{mf} m_{t-1} + W_{cf} c_{t-1} + b_f)$$<br>$$c_t &#x3D; f_t \odot c_{t-1} + i_t \odot g(W_{cx}x_t + W_{ch}h_{t-1} + b_c)$$<br>$$o_t &#x3D; \sigma(W_{ox}x_t + W_{oh}h_{t-1}+W_{oc}c_t + b_o)$$<br>$$h_t &#x3D; o_t \odot h(c_t)$$<br>$$y_t &#x3D; W_{yh}h_t + b_y$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>W</td>
+<td>权重矩阵，比如 $W_{ix}$ 表示 input gate 到输入向量的权重，以此类推</td>
+</tr>
+<tr>
+<td>b</td>
+<td>偏差向量（bias vector），比如 $b_i$ 是 input gate bias vector</td>
+</tr>
+<tr>
+<td>$\sigma$</td>
+<td>logistic sigmoid 函数</td>
+</tr>
+<tr>
+<td>i</td>
+<td>input gate</td>
+</tr>
+<tr>
+<td>f</td>
+<td>forget gate</td>
+</tr>
+<tr>
+<td>o</td>
+<td>output gate</td>
+</tr>
+<tr>
+<td>c</td>
+<td>激活向量(cell activation vector)</td>
+</tr>
+<tr>
+<td>h</td>
+<td>输出激活向量（cell ouput activatioin vector)</td>
+</tr>
+<tr>
+<td>$\odot$</td>
+<td>矩阵逐元素相乘 (elementwise product)</td>
+</tr>
+</tbody></table>
+<h4 id="Cell-State"><a href="#Cell-State" class="headerlink" title="Cell State"></a>Cell State</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-C-line.png" alt="lstm_cellstate"><span class="my-image-caption">lstm_cellstate</span></p>
+<p>LSTM 的状态参数是为每个隐层节点 (memory cell) 所共享的，换言之就是每个 memory cell 对整个反应链的状态作出修改。colah 将这种 cell state 更新机制类比为传送带。cell state 经过隐层中每个时间步上 memory cell 的更新，而所谓更新就是一些线性运算。</p>
+<h4 id="Forget-Gate"><a href="#Forget-Gate" class="headerlink" title="Forget Gate"></a>Forget Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-f.png" alt="lstm_forgetgate"><span class="my-image-caption">lstm_forgetgate</span></p>
+<p>forget gate 的输入包含： 当前时间步的输入向量，上一个时间步中 ouput gate 的输出向量。通过一次 sigmoid 变换映射到 0,1. $f_t$ 决定了旧的状态信息中有多少要遗弃，所以直接 cell state 进行逐元素相乘。</p>
+<h4 id="Input-Gate"><a href="#Input-Gate" class="headerlink" title="Input Gate"></a>Input Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-i.png" alt="lstm_inputgate"><span class="my-image-caption">lstm_inputgate</span></p>
+<p>这个步骤中 LSTM 做的是把新的信息加入 cell state 中，这项工作包含两部分： input gate layer 和 tanh layer. Input gate 层将决定 cell state 中的哪些值需要被更新，然后 tanh 层生成一组候选值 $\tilde{C}_t$ 来取代 cell state 中需要被更新的旧值. 然后将两个向量逐元素相乘，再与 cell state 相加。input gate 的输出向量也是只有 0 和 1，逐元素相乘后只有为 1 的那些状态量会被更新，所以 $i_t$ 起到的其实是一个遮罩的作用。</p>
+<h4 id="Ouput-Gate"><a href="#Ouput-Gate" class="headerlink" title="Ouput Gate"></a>Ouput Gate</h4><p><img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-o.png" alt="lstm_outputgate"><span class="my-image-caption">lstm_outputgate</span></p>
+<p>输出仍然是基于当前时间步的 cell state， 这部分同样由一个 sigmoid layer 和 tanh layer 组成。sigmoid 层决定哪些状态信息要被输出，tanh 层将当前 cell state 压缩到 $(-1,1)$ 区间内。然后执行逐元素相乘，产生这个单元的输出变量。输出变量同时作为下一个单元的 $h_t-1$ 加入到循环中。</p>
+<h3 id="References-参考资料"><a href="#References-参考资料" class="headerlink" title="References | 参考资料"></a>References | 参考资料</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1402.1128.pdf">Long Short-Term Memory Based Recurrent Neural Network Architectures for Large Vocabulary Speech Recognition</a><br><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks – colah’s blog</a><br><a target="_blank" rel="noopener" href="http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backpropagation-through-time-and-vanishing-gradients/">WILDML: Backpropagation Through Time and Vanishing Gradients</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Liyan Jiang</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://gnoluna.github.io/blog/2016/07/03/lstm/">http://gnoluna.github.io/blog/2016/07/03/lstm/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/lstm/"># lstm</a>
+                    
+                        <a href="/tags/Deep-Learning/"># Deep Learning</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2017/07/08/historyin100objects/">参观完了上博「大英百物」展</a>
+            
+            
+            <a class="next" rel="next" href="/2016/06/27/rnn/">Introduction to RNNs</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Liyan Jiang | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
