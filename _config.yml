@@ -78,8 +78,8 @@ feed:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:gnoluna/blog.git
-  branch: master
+  repo: git@github.com:gnoluna/gnoluna.github.io.git
+  branch: gh-pages
 
 search:
   path: search.xml
