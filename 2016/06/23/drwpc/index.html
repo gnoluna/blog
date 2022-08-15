@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-cn,en,default">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Liyan Jiang">
+
+
+
+
+
+<title>论文阅读: Distributed Representation of Words and Phrases and their Compositionality | Hardboiled Wonderland</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Liyan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Liyan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">论文阅读: Distributed Representation of Words and Phrases and their Compositionality</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Liyan Jiang</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">六月 23, 2016&nbsp;&nbsp;14:41:10</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Deep-Learning/">Deep Learning</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>这篇文章是 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh/Word2vec">Word2Vec</a> 作者关于 <a target="_blank" rel="noopener" href="https://scholar.google.com/citations?user=oBu8kMMAAAAJ&hl=zh-CN">Mikolov</a> 的 Skip-gram 模型提出的改进和扩展，主要是提升训练速度和词向量的质量。</p>
+<h3 id="关于-Skip-gram"><a href="#关于-Skip-gram" class="headerlink" title="关于 Skip-gram"></a>关于 Skip-gram</h3><p>Skip-gram 能够高效地从大量文本中训练出词向量。与其他神经网络架构模型不同的是，它不涉及矩阵乘法，大大提升了训练效率。经过学习后的词向量甚至能够进行线性运算。比如： vec(“Madrid”) - vec(“Spain”) + vec(“France”) is closer to vec(“Paris”)</p>
+<p><img src="/uploads/skipgram.png" alt="skipgram"><span class="my-image-caption">skipgram</span></p>
+<p>Skip-gram 的训练目标是能够预测文本中某个词周围可能出现的词。比如，现在有一份文档（去掉标点符号）由 $T$ 个词组成，$w_1,w_2,w_3,…,w_T$， skip-gram 的目标函数就是最大化它们的平均对数概率</p>
+<p>$$ \frac{1}{T} \sum_{t&#x3D;1}^{T} \sum_{-c \leq j \leq c} \log p(w_{t+j} | w_t) $$</p>
+<p>c 是上下文长度，也就是中心词 $w_t$ 的前后各 c 个词， c 越大意味着训练样本越多，精度也就越高，但时间开销大。以 softmax 的方式计算 $p(w_O|w_I)$</p>
+<p>$$ p(w_O|w_I) &#x3D; \frac{\exp({v’_{w_O}}^\top v_{w_I})}{\sum_{w&#x3D;1}^{W} \exp({v’_{w}}^\top v\_{w_I})} $$</p>
+<p>$W$ 是总词汇量，$v_w$ 和 $v’_w$ 是词 $w$ 的输入和输出变量。然而这个公式是不现实的，因为计算开销随着总词汇量 $W$ 而增长。</p>
+<h3 id="基于-Skip-gram-的扩展"><a href="#基于-Skip-gram-的扩展" class="headerlink" title="基于 Skip-gram 的扩展"></a>基于 Skip-gram 的扩展</h3><h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>skip-gram 中需要 $W$ 个输出节点来计算概率分布，而 Hierarchical Softmax 只需要大约 $\log_2(W)$ 个输出节点，因为它的输出层采用了二叉树的表现形式。每个节点是一个词，它的子节点存储是与这个词相关的词。节点中只存储该词与子节点词的相对概率。总词汇中的每个词都有一条从二叉树根部到自身的路径。用 $n(w,j)$ 来表示从根节点到 w 词这条路径上的第 j 个节点。用 $ch(n)$ 来表示 $n$ 的任意一个子节点。</p>
+<p>那么 Hierarchical Softmax 可以表示为</p>
+<p>$$ p(w | w_I) &#x3D; \prod_{j&#x3D;1}^{L(w)-1} \sigma ([[ n(w,j+1) &#x3D; ch(n(w,j))]]\cdot {v’_{n(w,j)}}^\top v_{w_I}) $$</p>
+<p>$$ s.t. \sigma (x)&#x3D; \frac{1}{1+\exp(-x)} $$</p>
+<p>$ \sum_{w&#x3D;1}^{W}p(w|w_I) &#x3D; 1 $ 是可以验证的，这样一来 $ \log p(w_O|w_I)$ 和 $\nabla \log p(w_O|w_I)$ 的计算开销就和 $L(W_O)$ 成比例。而 $L(W_O)$ 不会超过 $\log W$. Word2Vec 中使用的是哈夫曼二叉树，高频词汇编码较短，低频词汇编码较长。</p>
+<h4 id="Negative-Sampling"><a href="#Negative-Sampling" class="headerlink" title="Negative Sampling"></a>Negative Sampling</h4><p>NCE(Noise Contrastive Estimation):好的模型能够通过逻辑斯蒂回归将数据从噪声中区别出来</p>
+<p>因为 skip-gram 更关注于学习高质量的词向量表达，所以可以在保证词向量质量的前提下对 NCE 进行简化。于是定义了 NEG(Negative Sampling)</p>
+<p>$$ \log \sigma({v’_{w_O}}^\top v_{w_I} )+ \sum_{i&#x3D;1}^{k}\mathbb{E}_{w_i \sim P_n(w)}[\log \sigma(-{v’_{w_i}}^\top v_{w_I})] $$</p>
+<p>这个公式用来替代 skip-gram 目标函数中的 $\log p(w_O|w_I)$. $ P_n(w)$ 是词 $n$ 周围的噪声词分布（NCE 和 NEG 都有这个参数）。这个公式是用逻辑斯蒂回归从 $k$ 个负例中区别出目标词汇。对于小的训练集 $k$ 的最佳取值是 5-20， 对于大的训练集 $k$ 的取值会更小，大概 2-5. NCE 和 NEG 的区别在于 NCE 在计算时需要样本和噪音分布的数值概率，而 NEG 只需要样本。</p>
+<h4 id="Subsampling"><a href="#Subsampling" class="headerlink" title="Subsampling"></a>Subsampling</h4><p>subsampling 用于解决这样的问题：在英文中有大量高频词诸如 “in”, “the”, “a”, 这些词提供的信息量非常少。比如 “Paris” 和 “France” 的共现率明显比 “France” 和 “The” 的共现率低，但 “Paris” 和 “France” 明显更有用。</p>
+<p>为了解决高频和低频词汇间的不平衡，每个词汇的频率有一定概率被丢弃，概率由公式得出：</p>
+<p>$$ P(w_i) &#x3D; 1 - \sqrt{\frac{t}{f(w_i)}}$$</p>
+<p>$ f(w_i)$ 是词 $w_i$ 的概率. $t$ 是参数，作为淘汰词的门限，通常情况下约为 $10^{-5}$. 当词汇的频率高于 $t$ 就有一定概率被淘汰掉。</p>
+<h3 id="处理-Phrase"><a href="#处理-Phrase" class="headerlink" title="处理 Phrase"></a>处理 Phrase</h3><p>这部分主要解决专有名词的问题，比如期刊杂志的名字 “New York Times” 并不是单词 “New York” 和 “Times” 词义的简单组合，所以要把它们当成一个词组来看待。作者用了一种简单的数据驱动方式来识别这些专有名词。对于两个词 $w_i, w_j$：</p>
+<p>$$ score(w_i, w_j) &#x3D; \frac{count(w_i w_j) - \delta}{count(w_i) \times count(w_j)}$$</p>
+<p>其中 $\delta$ 是协同系数，用来避免太多无关的词被组合到一起。</p>
+<h3 id="资源下载"><a href="#资源下载" class="headerlink" title="资源下载"></a>资源下载</h3><p><a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjf3prT0b3NAhVI4mMKHVQCCwAQFggeMAA&url=https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf&usg=AFQjCNFvn2t3S41dxIocYbx5EpeOwmjXVQ&sig2=4bbJwW1O7AnHYZfFbA2pIQ">Distributed Representation of Words and Phrases and their Compositionality</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Liyan Jiang</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://gnoluna.github.io/blog/2016/06/23/drwpc/">http://gnoluna.github.io/blog/2016/06/23/drwpc/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nlp/"># nlp</a>
+                    
+                        <a href="/tags/word2vec/"># word2vec</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2016/06/27/rnn/">Introduction to RNNs</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Liyan Jiang | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

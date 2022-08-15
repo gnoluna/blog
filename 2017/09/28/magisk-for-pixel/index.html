@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-cn,en,default">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Liyan Jiang">
+
+
+
+
+
+<title>千辛万苦等来了 Magisk 对 Pixel(XL) 的官方支持 | Hardboiled Wonderland</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Liyan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Liyan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">千辛万苦等来了 Magisk 对 Pixel(XL) 的官方支持</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Liyan Jiang</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 28, 2017&nbsp;&nbsp;17:13:40</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>自从有了折腾手机的念头，我就从未放弃过给自己的 Pixel sailfish 装上 <a target="_blank" rel="noopener" href="https://forum.xda-developers.com/apps/magisk/official-magisk-v7-universal-systemless-t3473445">Magisk</a>。毕竟 Xposed 的作者已经以一副要弃坑的姿势搁置这个目前仍相对主流的框架，为了能在抵达欧陆之后玩上<strong>小畜生</strong>以及其他定制需求, Magisk 成了最吸引人的 systemless root 解决方案。然而 Pixel 的 A&#x2F;B partition 造成了各种不兼容。众 Pixel(XL) 用户只能依赖<a target="_blank" rel="noopener" href="https://forum.xda-developers.com/apps/magisk/unofficial-google-pixel-family-support-t3639262">非官方支持</a> (此处感谢 goodwin_c)。这在 Android 8.0 之前还都不是事，Oreo 一出我们就只能巴望着 topjohnwu 的更新（为此我还设置了 twitter 提醒 orz）。</p>
+<p>好在 topjohnwu 是个勤劳的开发者，度假回来马上更新了 <a target="_blank" rel="noopener" href="https://forum.xda-developers.com/apps/magisk/beta-magisk-v13-0-0980cb6-t3618589">v14.1</a>，感恩。</p>
+<p>目前为止在我的 Pixel sailfish Android 8.0 上没有问题，安装过程中也没出什么幺蛾子。在此记录下安装过程。</p>
+<p><strong>DISCLAIMER: 虽然几乎不可能刷砖，但还是得说一句 Do at your own risk.</strong></p>
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ul>
+<li><pre><code>下载 [Magisk v14.1](https://forum.xda-developers.com/attachment.php?s=b12bee961638472dc0099d6e042e0cb4&amp;attachmentid=4285325&amp;d=1506549792)
+</code></pre>
+<ul>
+<li><pre><code>下载 [twrp-3.1.1-0-fastboot-sailfish.img](https://dl.twrp.me/sailfish/twrp-3.1.1-0-fastboot-sailfish.img.html) (已经刷过 TWRP recovery 的可以忽略这项)。然后重命名为 twrp.img，出于方便键入的考虑。
+</code></pre>
+<ul>
+<li><pre><code>下载 [Magisk Manager v5.3.5](https://github.com/topjohnwu/MagiskManager/releases/download/v5.3.5/MagiskManager-v5.3.5.apk)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>电脑上安装 android-platform-tools (会用到 adb 和 fastboot)</li>
+<li>手机已解锁 OEM</li>
+<li>手机上设置开启 PIN 或者 Pattern 密码（要不然进入 recovery 之后文件夹会被加密完全找不到想要的文件）</li>
+</ul>
+<p><strong>特别提示</strong> 如果你之前折腾过，要刷回 Pixel 的原厂 boot.img 或者刷入 <a target="_blank" rel="noopener" href="https://forum.xda-developers.com/attachment.php?attachmentid=4285327&d=1506549946">Magisk Uninstaller</a></p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><ol>
+<li>手机链接电脑，将 <strong>Magisk-v14.1(1410).zip</strong> 和 <strong>MagiskManager-v5.3.5.apk</strong> 放入存储中</li>
+<li>开启 usb 调试</li>
+<li><code>adb devices</code> 确认手机被识别到</li>
+<li><code>adb reboot bootloader</code> 或者关机长按**电源+音量-**进入 bootloader 模式。</li>
+<li><code>fastboot devices</code> 确认手机被识别到</li>
+<li><code>fastboot boot /path/to/twrp.img</code> </li>
+<li>输入密码进入 twrp recovery，选择 install，找到并选中 <strong>Magisk-v14.1(1410).zip</strong>，swipe 刷入。完成后重启</li>
+<li>重启后安装 <strong>MagiskManager-v5.3.5.apk</strong></li>
+<li>看到此界面说明您已经安装成功</li>
+</ol>
+<img src="/uploads/magisk_screenshot.png" width=50% height=50%/>
+
+
+<h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><p>新版本发布前一周 Magisk 作者 topjohnwu 就<a target="_blank" rel="noopener" href="https://twitter.com/topjohnwu/status/908542227143471104">在 Twitter 上</a>说针对 Pixel A&#x2F;B 分区会有新特性。那就是，Magisk 和 OTA 更新兼得。无法 OTA 更新可以说是 root 之后最不方便的一件事，现在解决了。</p>
+<blockquote>
+<p>Pixel Exclusive Features<br>Surprise surprise! Thanks to the A&#x2F;B partition of Pixel devices, we can actually receive and apply OTAs seamlessly using the stock OTA mechanism and preserve Magisk at the same time! </p>
+</blockquote>
+<p>简单说就是在安装 Magisk 的时候它已经备份了原厂 boot 镜像。在需要 OTA 更新时还原到原厂 boot 接收更新。安装完成后再将 Magisk 装回去 _Install to Second Slot(After OTA)_。重启之后 Magisk 不会被卸载，因为在启动时 Magisk 已经自动给新版本的 boot 打上补丁。</p>
+<p>作者也在文档中添加了 OTA 更新相关的<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/blob/master/docs/tips.md#ota-installation-tips">指南</a>。亲妈一样的人文关怀。</p>
+<p>Magisk 是好东西哎~</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Liyan Jiang</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://gnoluna.github.io/blog/2017/09/28/magisk-for-pixel/">http://gnoluna.github.io/blog/2017/09/28/magisk-for-pixel/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Android/"># Android</a>
+                    
+                        <a href="/tags/Magisk/"># Magisk</a>
+                    
+                        <a href="/tags/Pixel/"># Pixel</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2017/09/22/rosseta-stone-jigsaw-puzzel/">拼图 in Lunatic Mode</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Liyan Jiang | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
